@@ -1,12 +1,12 @@
 body{
     background: rgb(251,63,115);
-background: radial-gradient(circle, rgba(251,63,115,1) 0%, rgba(251,252,70,1) 100%); 
-font-family: sans-serif;
-color: darkmagenta;
+    background: radial-gradient(circle, rgba(251,63,115,1) 0%, rgba(251,252,70,1) 100%); 
+    font-family: sans-serif;
+    color: darkmagenta;
 }
 main{
     width: 730px;
-    margin: 30px auto;
+    margin: 30px auto 10px;
     display: flex;
     align-items: center;
 }
