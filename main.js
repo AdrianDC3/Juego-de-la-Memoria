@@ -11,6 +11,12 @@ let timer = 60;
 let timerInicial = 60;
 let tiempoRegresivoId = null;
 
+let ganarAudio = new Audio(`./sonidos/ganar.mp3`);
+let perderAudio = new Audio(`./sonidos/perder.mp3`);
+let clickAudio = new Audio(`./sonidos/click.mp3`);
+let bienAudio = new Audio(`./sonidos/bien.mp3`);
+let malAudio = new Audio(`./sonidos/mal.mp3`);
+
 //Apuntando a documento HTML
 let mostrarMovimientos = document.getElementById('movimientos');
 let mostrarAciertos = document.getElementById('aciertos');
@@ -29,6 +35,7 @@ function contarTiempo(){
         if(timer == 0){
             clearInterval(tiempoRegresivoId);
             bloquearTarjetas();
+            perderAudio.play();
         }
     },1000);
 }
@@ -36,7 +43,7 @@ function contarTiempo(){
 function bloquearTarjetas(){
     for (let i = 0; i<=15; i++){
         let tarjetaBloqueada = document.getElementById(i);
-        tarjetaBloqueada.innerHTML = numeros[i];
+        tarjetaBloqueada.innerHTML = `<img src="./imagenes/${numeros[i]}.png" alt="">`;
         tarjetaBloqueada.disabled = true;
     }
 }
@@ -56,7 +63,8 @@ function destapar(id){
         //Mostrar primer numero
         tarjeta1 = document.getElementById(id);
         primerResultado = numeros[id];
-        tarjeta1.innerHTML = primerResultado;
+        tarjeta1.innerHTML = `<img src="./imagenes/${primerResultado}.png" alt="">`;
+        clickAudio.play();
 
         //Deshabilitar primer boton
         tarjeta1.disabled = true;
@@ -64,7 +72,7 @@ function destapar(id){
         //Mostrar segundo numero
         tarjeta2 = document.getElementById(id);
         segundoResultado = numeros[id];
-        tarjeta2.innerHTML = segundoResultado;
+        tarjeta2.innerHTML = `<img src="./imagenes/${segundoResultado}.png" alt="">`;
 
         //Deshabilitar segundo boton
         tarjeta2.disabled = true;
@@ -80,8 +88,10 @@ function destapar(id){
             //Aumentar aciertos
             aciertos++;
             mostrarAciertos.innerHTML = `Aciertos: ${aciertos}`;
+            bienAudio.play();
 
             if(aciertos == 8){
+                ganarAudio.play();
                 clearInterval(tiempoRegresivoId);
                 mostrarAciertos.innerHTML = `Aciertos: ${aciertos} 😱`;
                 mostrarTiempo.innerHTML = `Fantastico! 🎉 Solo te demoraste ${timerInicial - timer} segundos`
@@ -89,6 +99,7 @@ function destapar(id){
             }
 
         }else{
+            malAudio.play();
             //Mostrar valores y volver a tapar
             setTimeout(()=>{
                 tarjeta1.innerHTML = ' ';
@@ -99,4 +110,9 @@ function destapar(id){
             },800);
         }
     }
+}
+
+// Funcion Reiniciar
+function restart(){
+    location.reload();
 }
